@@ -3,6 +3,7 @@ package com.example.TarriffCalculator.controllers;
 import com.example.TarriffCalculator.model.Package;
 import com.example.TarriffCalculator.model.ResponseCreateOrder;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -106,9 +107,11 @@ public class RestController {
         objectMapper.writeValue(new File("src/main/resources/order.json"), request);
 
         double fullnessWeightPackages = 0;
-        for (int i = 0; i < packages.size(); i++) {
-            Package currentPackage = packages.get(0);
+        for (Package currentPackage : packages) {
             fullnessWeightPackages += currentPackage.getWeight();
+        }
+        if (fullnessWeightPackages < 0) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         double finalPriceOrder = ResponseCreateOrder.priceOneKg * (fullnessWeightPackages / 1000);
         ResponseCreateOrder currentResponseCreateOrder = new ResponseCreateOrder(
