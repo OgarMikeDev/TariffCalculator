@@ -2,6 +2,7 @@ package com.example.TarriffCalculator.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Package {
     private int weight;
@@ -63,6 +64,19 @@ public class Package {
 
     public static double getTotalPrice() {
         return totalPrice;
+    }
+
+    public static List<Package> fromListMapToListPackage(List<Map<String, Object>> mapPackages) {
+        List<Package> packages = new ArrayList<>();
+        for (Map<String, Object> currentMap : mapPackages) {
+            int weight = (int) currentMap.get("weight");
+            int length = (int) currentMap.get("length");
+            int width = (int) currentMap.get("width");
+            int height = (int) currentMap.get("height");
+            Package currentPackage = new Package(weight, length, width, height);
+            packages.add(currentPackage);
+        }
+        return packages;
     }
 
     @Override
