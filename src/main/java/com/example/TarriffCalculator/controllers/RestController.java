@@ -106,7 +106,10 @@ public class RestController {
 
         double fullnessWeightPackages = 0;
         for (Package currentPackage : packages) {
-            if (currentPackage.getWeight() > 150_000) {
+            if (currentPackage.getWeight() > 150_000 ||
+                    currentPackage.getWidth() > 1500 ||
+                        currentPackage.getHeight() > 1500 ||
+                            currentPackage.getLength() > 1500) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             fullnessWeightPackages += currentPackage.getWeight();
