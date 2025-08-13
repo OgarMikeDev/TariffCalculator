@@ -1,25 +1,24 @@
 package com.example.TarriffCalculator.model;
 
 public class ResponseCreateOrder {
-    private double price;
+    private double totalPrice;
     private double minimalPrice;
     private String currencyCode;
-    public static final double priceOneKg = 360;
 
     public ResponseCreateOrder() {};
 
-    public ResponseCreateOrder(double price, double minimalPrice, String currencyCode) {
-        this.price = price;
+    public ResponseCreateOrder(double totalPrice, double minimalPrice, String currencyCode) {
+        this.totalPrice = totalPrice;
         this.minimalPrice = minimalPrice;
         this.currencyCode = currencyCode;
     }
 
-    public double getPrice() {
-        return price;
+    public double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public double getMinimalPrice() {
@@ -41,7 +40,7 @@ public class ResponseCreateOrder {
     @Override
     public String toString() {
         return "ResponseCreateOrder{" +
-                "price=" + price +
+                "totalPrice=" + totalPrice +
                 ", minimalPrice=" + minimalPrice +
                 ", currencyCode='" + currencyCode + '\'' +
                 '}';

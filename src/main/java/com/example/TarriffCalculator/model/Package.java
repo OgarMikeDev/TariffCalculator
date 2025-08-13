@@ -11,6 +11,8 @@ public class Package {
     private int height;
     private static List<Package> packages = new ArrayList<>();
     private static double totalPrice = 0;
+    public static final double priceOneGram = 0.1;
+    public static final double priceOneMetre = 10_000;
 
     public Package(int weight, int length, int width, int height) {
         this.weight = weight;

@@ -104,7 +104,7 @@ public class RestController {
         System.out.println("Валюта:\n" + currencyName);
         objectMapper.writeValue(new File("src/main/resources/order.json"), request);
 
-        double fullnessWeightPackages = 0;
+        double finalPriceOrder = 0;
         for (Package currentPackage : packages) {
             if (currentPackage.getWeight() > 150_000 ||
                     (currentPackage.getWidth() < 0 || currentPackage.getWidth() > 1500) ||
@@ -112,14 +112,21 @@ public class RestController {
                     (currentPackage.getLength() < 0 || currentPackage.getLength() > 1500)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            fullnessWeightPackages += currentPackage.getWeight();
+            double pricePackageWeight = currentPackage.getWeight() * Package.priceOneGram;
+            double pricePackageDimensions =
+                    ((1.0 * currentPackage.getHeight() * currentPackage.getLength() * currentPackage.getWidth())
+                            / 1_000_000_000) * Package.priceOneMetre;
+            pricePackageWeight = Math.round(pricePackageWeight * 10_000) / 10_000.0;
+            pricePackageDimensions = Math.round(pricePackageDimensions * 10_000) / 10_000.0;
+            System.out.println("Цена упаковки по весу: " + pricePackageWeight);
+            System.out.println("Цена упаковки по габаритам: " + pricePackageDimensions);
+            finalPriceOrder += Math.max(pricePackageWeight, pricePackageDimensions);
         }
-        if (fullnessWeightPackages < 0 ||
+        if (finalPriceOrder < 0 ||
                 packages.size() == 0 ||
                     currencyName == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        double finalPriceOrder = ResponseCreateOrder.priceOneKg * (fullnessWeightPackages / 1000);
         ResponseCreateOrder currentResponseCreateOrder = new ResponseCreateOrder(
                 finalPriceOrder, 500.00, currencyName);
 
