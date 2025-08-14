@@ -112,9 +112,16 @@ public class RestController {
                     (currentPackage.getLength() < 0 || currentPackage.getLength() > 1500)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
+            double roundedWidth = (int) (Math.ceil(currentPackage.getWidth() / 50.0) * 50);
+            double roundedHeight = (int) (Math.ceil(currentPackage.getHeight() / 50.0) * 50);
+            double roundedLength = (int) (Math.ceil(currentPackage.getLength() / 50.0) * 50);
+            System.out.println("ширина: " + roundedWidth);
+            System.out.println("высота: " + roundedHeight);
+            System.out.println("длина: " + roundedLength);
+
             double pricePackageWeight = currentPackage.getWeight() * Package.priceOneGram;
             double pricePackageDimensions =
-                    ((1.0 * currentPackage.getHeight() * currentPackage.getLength() * currentPackage.getWidth())
+                    ((1.0 * roundedHeight * roundedLength * roundedWidth)
                             / 1_000_000_000) * Package.priceOneMetre;
             pricePackageWeight = Math.round(pricePackageWeight * 10_000) / 10_000.0;
             pricePackageDimensions = Math.round(pricePackageDimensions * 10_000) / 10_000.0;
