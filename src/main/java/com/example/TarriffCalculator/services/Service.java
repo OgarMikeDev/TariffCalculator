@@ -1,5 +1,7 @@
 package com.example.TarriffCalculator.services;
 
+import com.example.TarriffCalculator.model.Departure;
+import com.example.TarriffCalculator.model.Destination;
 import com.example.TarriffCalculator.model.Package;
 import com.example.TarriffCalculator.model.ResponseCreateOrder;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -122,10 +124,15 @@ public class Service {
         List<Map<String, Object>> mapPackages = (List<Map<String, Object>>) request.get("packages");
         List<com.example.TarriffCalculator.model.Package> packages = com.example.TarriffCalculator.model.Package.fromListMapToListPackage(mapPackages);
 
-        String currencyName = (String) request.get("currencyName");
+        String currencyName = (String) request.get("currencyCode");
+
+//        Departure departure = (Departure) request.get("departure");
+//        Destination destination = (Destination) request.get("destination");
 
         System.out.println("Упаковки:\n" + packages);
         System.out.println("Валюта:\n" + currencyName);
+        System.out.println("Координаты точки отправления:\n" + request.get("departure"));
+        System.out.println("Координаты точки прибытия:\n" + request.get("destination"));
         objectMapper.writeValue(new File("src/main/resources/order.json"), request);
 
         double finalPriceOrder = 0;
