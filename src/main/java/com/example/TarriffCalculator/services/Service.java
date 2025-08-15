@@ -15,62 +15,86 @@ import java.util.Map;
 @org.springframework.stereotype.Service
 public class Service {
     ObjectMapper objectMapper = new ObjectMapper();
-    @PostMapping("/createPackages")
-    public ResponseEntity<List<com.example.TarriffCalculator.model.Package>> createPackages(@RequestBody List<com.example.TarriffCalculator.model.Package> currentPackages) throws Exception {
-        /*
-        TODO Запрос json:
-            [
-                {
-                  "weight": 5000,
-                  "length": 345,
-                  "width": 589,
-                  "height": 234
-                },
-                {
-                  "weight": 3000,
-                  "length": 200,
-                  "width": 400,
-                  "height": 100
-                }
-            ]
-         */
+//    @PostMapping("/createPackages")
+//    public ResponseEntity<List<com.example.TarriffCalculator.model.Package>> createPackages(@RequestBody List<com.example.TarriffCalculator.model.Package> currentPackages) throws Exception {
+//        /*
+//        TODO Запрос json:
+//            [
+//                {
+//                  "weight": 5000,
+//                  "length": 345,
+//                  "width": 589,
+//                  "height": 234
+//                },
+//                {
+//                  "weight": 3000,
+//                  "length": 200,
+//                  "width": 400,
+//                  "height": 100
+//                }
+//            ]
+//         */
+//
+//        System.out.println("Упаковки:" + currentPackages);
+//        objectMapper.writeValue(new File("src/main/resources/packages.json"), currentPackages);
+//        return new ResponseEntity<>(currentPackages, HttpStatus.OK);
+//    }
+//
+//    @PostMapping("/createOrderSample")
+//    public ResponseEntity<Map<String, Object>> createOrderSample(@RequestBody Map<String, Object> request) throws Exception {
+//        /*
+//        TODO Запрос json:
+//            {
+//              "packages":[
+//                {
+//                  "weight": 4564,
+//                  "length": 345,
+//                  "width": 589,
+//                  "height": 234
+//                },
+//                {
+//                    "weight": 3000,
+//                    "length": 200,
+//                    "width": 400,
+//                    "height": 100
+//                }
+//              ],
+//              "currencyName": "RUB"
+//            }
+//         */
+//
+//        List<com.example.TarriffCalculator.model.Package> packages = (List<com.example.TarriffCalculator.model.Package>) request.get("packages");
+//        String currencyName = (String) request.get("currencyName");
+//
+//        System.out.println("Упаковки:\n" + packages);
+//        System.out.println("Валюта:\n" + currencyName);
+//        objectMapper.writeValue(new File("src/main/resources/order.json"), request);
+//
+//        return new ResponseEntity<>(request, HttpStatus.OK);
+//    }
 
-        System.out.println("Упаковки:" + currentPackages);
-        objectMapper.writeValue(new File("src/main/resources/packages.json"), currentPackages);
-        return new ResponseEntity<>(currentPackages, HttpStatus.OK);
-    }
+    public static double calculateHaversineDistance(double lat1, double lon1, double lat2, double lon2) {
+        final double R = 6371; // Радиус Земли в км
 
-    @PostMapping("/createOrderSample")
-    public ResponseEntity<Map<String, Object>> createOrderSample(@RequestBody Map<String, Object> request) throws Exception {
-        /*
-        TODO Запрос json:
-            {
-              "packages":[
-                {
-                  "weight": 4564,
-                  "length": 345,
-                  "width": 589,
-                  "height": 234
-                },
-                {
-                    "weight": 3000,
-                    "length": 200,
-                    "width": 400,
-                    "height": 100
-                }
-              ],
-              "currencyName": "RUB"
-            }
-         */
+        // Переводим градусы в радианы
+        double lat1Rad = Math.toRadians(lat1);
+        double lon1Rad = Math.toRadians(lon1);
+        double lat2Rad = Math.toRadians(lat2);
+        double lon2Rad = Math.toRadians(lon2);
 
-        List<com.example.TarriffCalculator.model.Package> packages = (List<com.example.TarriffCalculator.model.Package>) request.get("packages");
-        String currencyName = (String) request.get("currencyName");
+        // Разница координат
+        double dLat = lat2Rad - lat1Rad;
+        double dLon = lon2Rad - lon1Rad;
 
-        System.out.println("Упаковки:\n" + packages);
-        System.out.println("Валюта:\n" + currencyName);
-        objectMapper.writeValue(new File("src/main/resources/order.json"), request);
+        // Формула гаверсинусов
+        double a = Math.pow(Math.sin(dLat / 2), 2)
+                + Math.cos(lat1Rad) * Math.cos(lat2Rad)
+                * Math.pow(Math.sin(dLon / 2), 2);
 
-        return new ResponseEntity<>(request, HttpStatus.OK);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c;
+
+        return distance;
     }
 
     public ResponseEntity<ResponseCreateOrder> createOrder(Map<String, Object> request) throws Exception {
