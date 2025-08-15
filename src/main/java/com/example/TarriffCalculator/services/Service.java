@@ -171,7 +171,7 @@ public class Service {
         double distance = calculateHaversineDistance(
                 departure.getLatitude(), departure.getLongitude(), destination.getLatitude(), destination.getLongitude());
         if (distance > 450) {
-
+            finalPriceOrder = distance / 450.0 * finalPriceOrder;
         }
         ResponseCreateOrder currentResponseCreateOrder = new ResponseCreateOrder(
                 finalPriceOrder, 500.00, currencyName);
