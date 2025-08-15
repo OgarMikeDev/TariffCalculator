@@ -109,15 +109,24 @@ public class Service {
                   "length": 345,
                   "width": 589,
                   "height": 234
-                },
-              "currencyName": "RUB"
+                }
+              ],
+              "currencyCode": "RUB",
+              "destination": {
+                 "latitude" : 64.23424,
+                 "longitude" : 55.027532
+              },
+              "departure" : {
+                 "latitude" : 55.446008,
+                 "longitude" : 65.339151
+              }
             }
 
             TODO Ответ json:
                 {
-                "totalPrice": 1643.69,
-                "minimalPrice": 500.00,
-                "currencyCode": "RUB"
+                    "totalPrice": 1319.769964282748,
+                    "minimalPrice": 500.0,
+                    "currencyCode": "RUB"
                 }
          */
 
@@ -177,6 +186,7 @@ public class Service {
         if (distance > 450) {
             finalPriceOrder = distance / 450.0 * finalPriceOrder;
         }
+        finalPriceOrder = ((int) Math.round(finalPriceOrder / 100)) * 100;
         ResponseCreateOrder currentResponseCreateOrder = new ResponseCreateOrder(
                 finalPriceOrder, 500.00, currencyName);
 
