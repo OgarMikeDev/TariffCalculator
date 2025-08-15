@@ -124,7 +124,7 @@ public class Service {
 
             TODO Ответ json:
                 {
-                    "totalPrice": 1319.769964282748,
+                    "totalPrice": 1319.77,
                     "minimalPrice": 500.0,
                     "currencyCode": "RUB"
                 }
