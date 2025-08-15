@@ -126,13 +126,16 @@ public class Service {
 
         String currencyName = (String) request.get("currencyCode");
 
-//        Departure departure = (Departure) request.get("departure");
-//        Destination destination = (Destination) request.get("destination");
+        Map<String, Object> objectMap1 = (Map<String, Object>) request.get("destination");
+        Destination destination = Destination.fromMapObjectToDestination(objectMap1);
+
+        Map<String, Object> objectMap2 = (Map<String, Object>) request.get("departure");
+        Departure departure = Departure.fromMapObjectToDeparture(objectMap2);
 
         System.out.println("Упаковки:\n" + packages);
         System.out.println("Валюта:\n" + currencyName);
-        System.out.println("Координаты точки отправления:\n" + request.get("departure"));
-        System.out.println("Координаты точки прибытия:\n" + request.get("destination"));
+        System.out.println("Координаты точки отправления:\n" + departure);
+        System.out.println("Координаты точки прибытия:\n" + destination);
         objectMapper.writeValue(new File("src/main/resources/order.json"), request);
 
         double finalPriceOrder = 0;
