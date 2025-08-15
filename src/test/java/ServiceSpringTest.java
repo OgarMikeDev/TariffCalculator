@@ -1,4 +1,5 @@
 import com.example.TarriffCalculator.model.*;
+import com.example.TarriffCalculator.services.Service;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -54,7 +55,12 @@ class ServiceSpringTest {
         request.put("departure", Map.of("latitude", 59.93, "longitude", 30.33));
 
         // Act
-        ResponseEntity<ResponseCreateOrder> response = service.createOrder(request);
+        ResponseEntity<ResponseCreateOrder> response = null;
+        try {
+             response = service.createOrder(request);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
 
         // Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -77,7 +83,12 @@ class ServiceSpringTest {
         request.put("departure", Map.of("latitude", 59.93, "longitude", 30.33));
 
         // Act
-        ResponseEntity<ResponseCreateOrder> response = service.createOrder(request);
+        ResponseEntity<ResponseCreateOrder> response = null;
+        try {
+            response = service.createOrder(request);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
 
         // Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -103,7 +114,12 @@ class ServiceSpringTest {
         request.put("departure", Map.of("latitude", 43.11, "longitude", 131.87)); // Vladivostok (~6400 km)
 
         // Act
-        ResponseEntity<ResponseCreateOrder> response = service.createOrder(request);
+        ResponseEntity<ResponseCreateOrder> response = null;
+        try {
+            response = service.createOrder(request);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
 
         // Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -128,7 +144,12 @@ class ServiceSpringTest {
         request.put("departure", Map.of("latitude", 59.93, "longitude", 30.33));
 
         // Act
-        ResponseEntity<ResponseCreateOrder> response = service.createOrder(request);
+        ResponseEntity<ResponseCreateOrder> response = null;
+        try {
+           response = service.createOrder(request);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
 
         // Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
@@ -151,7 +172,12 @@ class ServiceSpringTest {
         request.put("departure", Map.of("latitude", 59.93, "longitude", 30.33));
 
         // Act
-        ResponseEntity<ResponseCreateOrder> response = service.createOrder(request);
+        ResponseEntity<ResponseCreateOrder> response = null;
+        try {
+            response = service.createOrder(request);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
 
         // Assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
