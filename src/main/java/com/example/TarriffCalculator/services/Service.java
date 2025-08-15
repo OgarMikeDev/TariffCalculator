@@ -168,6 +168,11 @@ public class Service {
                 currencyName == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+        double distance = calculateHaversineDistance(
+                departure.getLatitude(), departure.getLongitude(), destination.getLatitude(), destination.getLongitude());
+        if (distance > 450) {
+
+        }
         ResponseCreateOrder currentResponseCreateOrder = new ResponseCreateOrder(
                 finalPriceOrder, 500.00, currencyName);
 
