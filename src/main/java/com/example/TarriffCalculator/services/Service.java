@@ -165,7 +165,11 @@ public class Service {
         }
         if (finalPriceOrder < 0 ||
                 packages.size() == 0 ||
-                currencyName == null) {
+                    currencyName == null ||
+                        (departure.getLatitude() < 45 || departure.getLatitude() > 65) ||
+                        (destination.getLatitude() < 45 || destination.getLatitude() > 65) ||
+                            (departure.getLongitude() < 30 || departure.getLongitude() > 96) ||
+                            (destination.getLongitude() < 30 || destination.getLongitude() > 96)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         double distance = calculateHaversineDistance(
