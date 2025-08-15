@@ -186,7 +186,7 @@ public class Service {
         if (distance > 450) {
             finalPriceOrder = distance / 450.0 * finalPriceOrder;
         }
-        finalPriceOrder = ((int) Math.round(finalPriceOrder / 100)) * 100;
+        finalPriceOrder = ((int) Math.round(finalPriceOrder * 100)) / 100.0;
         ResponseCreateOrder currentResponseCreateOrder = new ResponseCreateOrder(
                 finalPriceOrder, 500.00, currencyName);
 
